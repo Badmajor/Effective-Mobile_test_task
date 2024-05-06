@@ -6,7 +6,7 @@ from utils import Wallet
 
 
 def add_subparsers(parser: argparse.ArgumentParser):
-    """Добавляет команды с аргументами в parser"""
+    """Добавляет команды с аргументами в parser."""
     subparsers = parser.add_subparsers()
     for cmd, settings in COMMANDS.items():
         parser = subparsers.add_parser(
@@ -22,14 +22,14 @@ def add_subparsers(parser: argparse.ArgumentParser):
             )
         if settings['cursor']:
             parser.add_argument(
-                f'-f',
-                f'--field',
+                '-f',
+                '--field',
                 help='Поле которое нужно поменять',
                 required=True
             )
             parser.add_argument(
-                f'-n',
-                f'--new',
+                '-n',
+                '--new',
                 help='Новое значение',
                 required=True
             )

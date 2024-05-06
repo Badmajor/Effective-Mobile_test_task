@@ -20,21 +20,27 @@ class Wallet:
                 self.data = list(reader)
 
     def show(self, *args, **kwargs):
-        """Метод выводит баланс в консоль"""
-        incomes: int = sum(float(record['amount']) for record in self.data if record['category'] == 'доход')
-        expenses: int = sum(float(record['amount']) for record in self.data if record['category'] == 'расход')
+        """Метод выводит баланс в консоль."""
+        incomes: int = sum(
+            float(record['amount'])
+            for record in self.data if record['category'] == 'доход'
+        )
+        expenses: int = sum(
+            float(record['amount'])
+            for record in self.data if record['category'] == 'расход'
+        )
         balance: int = incomes - expenses
         print(balance)
 
     def add(self, namespace: argparse.Namespace):
-        """Метод добавляет запись файл"""
+        """Метод добавляет запись файл."""
         namespace.category = namespace.category.lower()
         self.data.append(namespace.__dict__)
         self.save()
         print(SUCCESS)
 
     def save(self):
-        """Метод сохраняет self.data в файл"""
+        """Метод сохраняет self.data в файл."""
         with open(self.filename, 'w') as f:
             writer = csv.DictWriter(f, fieldnames=FIELDS.keys())
             writer.writeheader()
@@ -45,7 +51,7 @@ class Wallet:
         print(*result[1], sep='\n')
 
     def _search(self, namespace: argparse.Namespace | dict):
-        """Метод ищет совпадения полученных ключей и значений в self.data """
+        """Метод ищет совпадения полученных ключей и значений в self.data."""
         result = []
         if isinstance(namespace, argparse.Namespace):
             namespace: dict = namespace.__dict__
@@ -57,8 +63,8 @@ class Wallet:
                 result.append((i, record))
         return result
 
-    def update(self, namespace: argparse.Namespace, choice: int=None):
-        """Метод обновляет значение строки"""
+    def update(self, namespace: argparse.Namespace, choice=None):
+        """Метод обновляет значение строки."""
         dict_args: dict = namespace.__dict__
         field = dict_args.pop('field')
         new_value = dict_args.pop('new')
